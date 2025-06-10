@@ -3,8 +3,10 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:dart_eval/src/eval/bindgen/context.dart';
 import 'package:dart_eval/src/eval/bindgen/type.dart';
 
-String namedParameters(BindgenContext ctx,
-    {required ExecutableElement element}) {
+String namedParameters(
+  BindgenContext ctx, {
+  required ExecutableElement element,
+}) {
   final params = element.parameters.where((e) => e.isNamed);
   if (params.isEmpty) {
     return '';
@@ -13,8 +15,10 @@ String namedParameters(BindgenContext ctx,
   return parameters(ctx, params.toList());
 }
 
-String positionalParameters(BindgenContext ctx,
-    {required ExecutableElement element}) {
+String positionalParameters(
+  BindgenContext ctx, {
+  required ExecutableElement element,
+}) {
   final params = element.parameters.where((e) => e.isPositional);
   if (params.isEmpty) {
     return '';
@@ -25,7 +29,9 @@ String positionalParameters(BindgenContext ctx,
 
 String parameters(BindgenContext ctx, List<ParameterElement> params) {
   return List.generate(
-      params.length, (index) => _parameterFrom(ctx, params[index])).join('\n');
+    params.length,
+    (index) => _parameterFrom(ctx, params[index]),
+  ).join('\n');
 }
 
 String _parameterFrom(BindgenContext ctx, ParameterElement parameter) {
@@ -38,8 +44,11 @@ String _parameterFrom(BindgenContext ctx, ParameterElement parameter) {
   ''';
 }
 
-String argumentAccessors(BindgenContext ctx, List<ParameterElement> params,
-    {Map<String, String> paramMapping = const {}}) {
+String argumentAccessors(
+  BindgenContext ctx,
+  List<ParameterElement> params, {
+  Map<String, String> paramMapping = const {},
+}) {
   final paramBuffer = StringBuffer();
   for (var i = 0; i < params.length; i++) {
     final param = params[i];
@@ -97,14 +106,18 @@ String argumentAccessors(BindgenContext ctx, List<ParameterElement> params,
       paramBuffer.write(') {\n');
       paramBuffer.write('return (args[$i] as EvalCallable)(runtime, null, [');
       if (type is FunctionType) {
-        for (var j = 0; j < type.normalParameterTypes.length; j++) {
-          var _name = type.normalParameterNames[j];
-          if (_name.isEmpty) {
-            _name = 'v$j';
-          }
-          paramBuffer.write(wrapVar(ctx, type.normalParameterTypes[i], _name));
-          if (j < type.normalParameterTypes.length - 1) {
-            paramBuffer.write(', ');
+        if (i < type.normalParameterTypes.length) {
+          for (var j = 0; j < type.normalParameterTypes.length; j++) {
+            var _name = type.normalParameterNames[j];
+            if (_name.isEmpty) {
+              _name = 'v$j';
+            }
+            paramBuffer.write(
+              wrapVar(ctx, type.normalParameterTypes[i], _name),
+            );
+            if (j < type.normalParameterTypes.length - 1) {
+              paramBuffer.write(', ');
+            }
           }
         }
 
@@ -115,8 +128,9 @@ String argumentAccessors(BindgenContext ctx, List<ParameterElement> params,
 
           for (var j = 0; j < type.optionalParameterNames.length; j++) {
             final _name = type.optionalParameterNames[i];
-            paramBuffer
-                .write(wrapVar(ctx, type.optionalParameterTypes[i], _name));
+            paramBuffer.write(
+              wrapVar(ctx, type.optionalParameterTypes[i], _name),
+            );
             if (j < type.optionalParameterNames.length - 1) {
               paramBuffer.write(', ');
             }
