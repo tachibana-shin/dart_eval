@@ -1510,6 +1510,8 @@ class _$List$view<E> extends $List<E> {
         return __addAll;
       case 'first':
         return $map(_superclass.first);
+      case 'any':
+        return __listAny;
       case 'contains':
         return __listContains;
       case 'where':
@@ -1633,6 +1635,14 @@ class _$List$view<E> extends $List<E> {
     return $List.wrap((target! as _$List$view)
         .$value
         .sublist(args[0]!.$value, args[1]?.$value));
+  }
+
+  static const $Function __listAny = $Function(_listAny);
+
+  static $Value? _listAny(Runtime runtime, $Value? target, List<$Value?> args) {
+    final test = args[0] as EvalCallable;
+    return $bool((target! as _$List$view)
+        .any((e) => test.call(runtime, null, [e])!.$value as bool));
   }
 
   static const $Function __listContains = $Function(_listContains);
