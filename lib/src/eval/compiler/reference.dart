@@ -259,7 +259,13 @@ class IdentifierReference implements Reference {
         final $type = instanceDeclaration.first;
         final _dec = instanceDeclaration.second;
 
-        final $this = ctx.lookupLocal('#this')!;
+        final instOffset = ctx.scopeFrameOffset++;
+
+        var $this = ctx.lookupLocal('#this');
+        if ($this == null) {
+          ctx.setLocal(
+              '#this', $this = Variable(instOffset, TypeRef.$this(ctx)!));
+        }
 
         if (!_dec.isBridge) {
           final declaration = _dec.declaration;
