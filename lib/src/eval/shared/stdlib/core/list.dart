@@ -758,6 +758,34 @@ class $List<E> implements List<E>, $Instance {
           isStatic: false),
     },
     getters: {
+      'first': BridgeMethodDef(
+          BridgeFunctionDef(
+            returns:
+                BridgeTypeAnnotation(BridgeTypeRef.ref('E'), nullable: false),
+            params: [
+              BridgeParameter(
+                  'value',
+                  BridgeTypeAnnotation(BridgeTypeRef.ref('E', []),
+                      nullable: false),
+                  false)
+            ],
+            namedParams: [],
+          ),
+          isStatic: false),
+      'last': BridgeMethodDef(
+          BridgeFunctionDef(
+            returns:
+                BridgeTypeAnnotation(BridgeTypeRef.ref('E'), nullable: false),
+            params: [
+              BridgeParameter(
+                  'value',
+                  BridgeTypeAnnotation(BridgeTypeRef.ref('E', []),
+                      nullable: false),
+                  false)
+            ],
+            namedParams: [],
+          ),
+          isStatic: false),
       'length': BridgeMethodDef(
           BridgeFunctionDef(
             returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.int, []),
@@ -781,8 +809,8 @@ class $List<E> implements List<E>, $Instance {
     setters: {
       'first': BridgeMethodDef(
           BridgeFunctionDef(
-            returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.voidType, []),
-                nullable: false),
+            returns:
+                BridgeTypeAnnotation(BridgeTypeRef.ref('E'), nullable: false),
             params: [
               BridgeParameter(
                   'value',
@@ -795,8 +823,8 @@ class $List<E> implements List<E>, $Instance {
           isStatic: false),
       'last': BridgeMethodDef(
           BridgeFunctionDef(
-            returns: BridgeTypeAnnotation(BridgeTypeRef(CoreTypes.voidType, []),
-                nullable: false),
+            returns:
+                BridgeTypeAnnotation(BridgeTypeRef.ref('E'), nullable: false),
             params: [
               BridgeParameter(
                   'value',
